@@ -35,7 +35,7 @@ async function run() {
     await client.connect();
 
     const foodCollection = client.db('resturentDB').collection('allFood');
-    // const pageCollection = client.db('resturentDB').collection('foodPage');
+    const purchaseCollection = client.db('resturentDB').collection('purchase');
 // overall api 
     // app.get('/allFood', async(req, res) => {
     //   const cursor = foodCollection.find();
@@ -81,10 +81,27 @@ async function run() {
       const newFood = req.body;
       console.log(newFood);
       const result = await foodCollection.insertOne(newFood);
-      res.send(result);
+      res.send(result); 
     })
 
-     
+    //  // addfood 
+    //  app.post('/allFood', async(res, res) => {
+    //   const newFood = req.body;
+    //   console.log(newFood)
+    //   const result = await foodCollection.insertOne()
+    // })
+
+    //  purchase 
+
+    app.post('/purchase', async (req, res) => {
+      const booking = req.body;
+      console.log(booking);
+      const result = await purchaseCollection.insertOne(booking);
+      res.send(result);
+    });
+
+
+   
     
 
 
