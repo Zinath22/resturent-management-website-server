@@ -45,6 +45,7 @@ async function run() {
 
     const foodCollection = client.db('resturentDB').collection('allFood');
     const purchaseCollection = client.db('resturentDB').collection('purchase');
+    const usersCollection = client.db('resturentDB').collection('users');
 // overall api 
     // app.get('/allFood', async(req, res) => {
     //   const cursor = foodCollection.find();
@@ -55,6 +56,27 @@ async function run() {
     //   const result = await cursor.toArray();
     //   res.send(result);
     // });
+
+    // user
+    app.get('/users', async (req, res) => {
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result)
+  })
+  app.get('/users/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await usersCollection.findOne(query)
+      res.send(result)
+  })
+  app.post('/users', async (req, res) => {
+      const newUser = req.body;
+      console.log(newUser);
+      const result = await usersCollection.insertOne(newUser);
+      res.send(result);
+  });
+
+
 
     app.get('/allFood', async(req, res) => {
       // const cursor = foodCollection.find();
