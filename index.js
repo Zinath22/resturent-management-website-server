@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
@@ -11,10 +12,7 @@ app.use(express.json())
 
 
 
-// resturentManagement
-// 9b6gEpbZRi7Yebhv
 
-// console.log(process.env.DB_USER)
 
 
 
@@ -46,16 +44,15 @@ async function run() {
     const foodCollection = client.db('resturentDB').collection('allFood');
     const purchaseCollection = client.db('resturentDB').collection('purchase');
     const usersCollection = client.db('resturentDB').collection('users');
-    // overall api 
-    // app.get('/allFood', async(req, res) => {
-    //   const cursor = foodCollection.find();
-    //   const page = parseInt(req.query.page);
-    //   const size = parseInt(req.query.size)
-    //   console.log(req.query);
+    
+//  auth api 
+   
 
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
+app.post('/jwt', async(req, res) => {
+  const user = req.body;
+  console.log(user);
+  res.send(user);
+})
 
     // user
     app.get('/users', async (req, res) => {
@@ -115,29 +112,7 @@ async function run() {
       res.send(result);
     })
 
-    // update 
-    // app.put('/allFood', async (req, res) => {
-    //   const id = req.params.id;
-    //   const filter = { _id: new ObjectId(id) }
-    //   const options = { upsert: true };
-    //   const updateFood = req.body;
-    //   const food = {
-    //     $set: {
-
-    //       food_name: updateFood.food_name,
-    //       food_category: updateFood.food_category,
-    //       quantity: updateFood.quantity,
-    //       food_description: updateFood.food_description,
-    //       price: updateFood.price,
-    //       added_by_name: updateFood.added_by_name,
-    //       added_by_email: user?.email, // Make sure user is defined
-    //       food_img: updateFood.food_img,
-    //       food_origin: updateFood.food_origin
-    //     }
-    //   }
-    //   const result = await foodCollection.updateOne(filter, food, options);
-    //   res.send(result);
-    // })
+    
 
     app.put('/allFood/:id', async (req, res) => {
       const id = req.params.id;
