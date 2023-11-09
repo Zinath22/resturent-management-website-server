@@ -46,7 +46,7 @@ async function run() {
     const foodCollection = client.db('resturentDB').collection('allFood');
     const purchaseCollection = client.db('resturentDB').collection('purchase');
     const usersCollection = client.db('resturentDB').collection('users');
-// overall api 
+    // overall api 
     // app.get('/allFood', async(req, res) => {
     //   const cursor = foodCollection.find();
     //   const page = parseInt(req.query.page);
@@ -62,85 +62,107 @@ async function run() {
       const cursor = usersCollection.find();
       const result = await cursor.toArray();
       res.send(result)
-  })
-  app.get('/users/:id', async (req, res) => {
+    })
+    app.get('/users/:id', async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
       const result = await usersCollection.findOne(query)
       res.send(result)
-  })
-  app.post('/users', async (req, res) => {
+    })
+    app.post('/users', async (req, res) => {
       const newUser = req.body;
       console.log(newUser);
       const result = await usersCollection.insertOne(newUser);
       res.send(result);
-  });
+    });
 
 
 
-    app.get('/allFood', async(req, res) => {
+    app.get('/allFood', async (req, res) => {
       // const cursor = foodCollection.find();
       const page = parseInt(req.query.page);
       const size = parseInt(req.query.size)
       // console.log(req.query);
 
       const result = await foodCollection.find()
-      .skip(page * size)
-      .limit(size)
-      .toArray();
+        .skip(page * size)
+        .limit(size)
+        .toArray();
       res.send(result);
     });
-    
+
     // details page 
-    app.get('/allFood/:id', async(req, res) =>{
+    app.get('/allFood/:id', async (req, res) => {
       const id = req.params.id;
-      const query ={_id: new ObjectId(id)}
+      const query = { _id: new ObjectId(id) }
       const result = await foodCollection.findOne(query);
       res.send(result);
-      });
+    });
 
-      // allfood / pagination page api 
+    // allfood / pagination page api 
 
-      app.get('/foodCount', async(req, res) => {
-        const count = await foodCollection.estimatedDocumentCount();
-        res.send({count});
+    app.get('/foodCount', async (req, res) => {
+      const count = await foodCollection.estimatedDocumentCount();
+      res.send({ count });
 
-      })
-    
-// add 
-    app.post('/allFood', async(req, res)=> {
+    })
+
+    // add 
+    app.post('/allFood', async (req, res) => {
       const newFood = req.body;
       console.log(newFood);
       const result = await foodCollection.insertOne(newFood);
-      res.send(result); 
+      res.send(result);
     })
 
     // update 
-    app.put('/allFood', async(req, res) => {
+    // app.put('/allFood', async (req, res) => {
+    //   const id = req.params.id;
+    //   const filter = { _id: new ObjectId(id) }
+    //   const options = { upsert: true };
+    //   const updateFood = req.body;
+    //   const food = {
+    //     $set: {
+
+    //       food_name: updateFood.food_name,
+    //       food_category: updateFood.food_category,
+    //       quantity: updateFood.quantity,
+    //       food_description: updateFood.food_description,
+    //       price: updateFood.price,
+    //       added_by_name: updateFood.added_by_name,
+    //       added_by_email: user?.email, // Make sure user is defined
+    //       food_img: updateFood.food_img,
+    //       food_origin: updateFood.food_origin
+    //     }
+    //   }
+    //   const result = await foodCollection.updateOne(filter, food, options);
+    //   res.send(result);
+    // })
+
+    app.put('/allFood/:id', async (req, res) => {
       const id = req.params.id;
-      const filter = {_id: new ObjectId(id)}
-      const options = { upsert: true};
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true }
       const updateFood = req.body;
-      const food = {
-        $set: {
-     
-           food_name : updateFood.food_name,
-        food_category : updateFood.food_category,
-           quantity : updateFood.quantity,
-           food_description : updateFood.food_description,
-           price : updateFood.price,
-          added_by_name : updateFood.added_by_name,
-           added_by_email : user?.email, // Make sure user is defined
-           food_img : updateFood.food_img,
-          food_origin : updateFood.food_origin
-        }
+      const product = {
+          $set: {
+            food_name: updateFood.food_name,
+            food_category: updateFood. food_category,
+            quantity: updateFood.  quantity,
+            food_description: updateFood.food_description,
+            price: updateFood.price,
+            added_by_name: updateFood. added_by_name,
+            food_img: updateFood.food_img,
+            food_origin: updateFood. food_origin
+
+
+          }
+
       }
-     const result = await foodCollection.updateOne(filter, food, options);
-     res.send(result);
-    })
+      const result = await foodCollection.updateOne(filter, product, options)
+      res.send(result);
+  })
 
-
-    
 
 
     //  // addfood 
@@ -157,14 +179,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
 
-  });
-  
+    });
 
-  app.get('/purchase/:id', async(req, res) =>{
-    const id = req.params.id;
-    const query ={_id: new ObjectId(id)}
-    const result = await purchaseCollection.findOne(query);
-    res.send(result);
+
+    app.get('/purchase/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await purchaseCollection.findOne(query);
+      res.send(result);
     });
 
 
@@ -175,11 +197,11 @@ async function run() {
       res.send(result);
     });
 
-    
 
 
-   
-    
+
+
+
 
 
     // Send a ping to confirm a successful connection
@@ -194,9 +216,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('SIMPLE RESTURENT IS RUNNING')
+  res.send('SIMPLE RESTURENT IS RUNNING')
 })
 
-app.listen(port, () =>{
-    console.log(`RESTURENT WEBSITE is running on port, ${port}`)
+app.listen(port, () => {
+  console.log(`RESTURENT WEBSITE is running on port, ${port}`)
 })
