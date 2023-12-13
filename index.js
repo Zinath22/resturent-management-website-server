@@ -169,11 +169,18 @@ app.post('/jwt', async(req, res) => {
 
     // delete 
 
+    // app.delete('/purchase/:id', async(req, res) => {
+    //   const id = req.params.id;
+    //   const query = { _id: new ObjectId(id) }
+    //   const result = await purchaseCollection.deleteOne(query);
+    //   res.send(result);
+    // })
+
     app.delete('/purchase/:id', async(req, res) => {
       const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
+      const query = { _id: new ObjectId(id)}
       const result = await purchaseCollection.deleteOne(query);
-      req.send(result);
+      res.send(result);
     })
 
 
