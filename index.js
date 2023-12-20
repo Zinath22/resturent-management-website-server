@@ -134,12 +134,6 @@ app.post('/jwt', async(req, res) => {
 
 
 
-    //  // addfood 
-    //  app.post('/allFood', async(res, res) => {
-    //   const newFood = req.body;
-    //   console.log(newFood)
-    //   const result = await foodCollection.insertOne()
-    // })
 
     //  purchase 
 
